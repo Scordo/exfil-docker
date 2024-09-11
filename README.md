@@ -8,6 +8,33 @@ EXFIL is a tactical first person shooter which aims to provide gamers with sandb
 
 ## How to use this image
 
+### Create a new steam account for your dedicated server
+
+This is required to deactivate Steam Guard and to not mix it with your normal steam account.
+Steam Guard requires you to use 2FA, which is bad when using docker.
+
+1. Create a new account at: https://store.steampowered.com/join/
+2. Deactivate Steam Guard: https://store.steampowered.com/twofactor/manage/
+3. Redeem your Server-Key with this account
+
+### Creating a Token for loging in to this github container registry
+
+This is required to download the docker image later.
+
+1. Navigate to: <https://github.com/settings/tokens>
+2. Generate New Token: Generate new token (classic)
+3. Note: Package Download
+ Expiration: No expiration
+ Selected scopes: read:packages
+4. Push button: Generate Token
+5. Copy token and write it down (cant be seen again)
+
+### Docker Login to github registry (for downloading the image)
+
+1. Open a terminal to your linux machine having docker installed
+2. Run the following command to login to docker: ```echo "Your Token you generated" | docker login ghcr.io -u YourGitHubUserName --password-stdin```
+3. Download the image: docker pull ghcr.io/scordo/exfil-docker/server:latest
+
 ### Hosting a simple game server
 
 Running using Docker:
