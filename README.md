@@ -38,6 +38,9 @@ $ docker run \
     -e STEAM_USER=YourSteamServerAccountName \
     -e STEAM_PASSWORD=YourSteamServerAccountPassword \
     -e STEAM_TOKEN= \
+    -e EXFIL_SERVER_NAME="Your Server Name" \
+    -e EXFIL_MAX_PLAYERS=16 \
+    -e EXFIL_SERVER_ADMINS="YourSteamID=YourSteamName" \
     -v $(pwd)/data/MatchSettings:/home/steam/exfil-dedicated/Exfil/MatchSettings/ \
     -v $(pwd)/data/Saved:/home/steam/exfil-dedicated/Exfil/Saved/ \
     -v $(pwd)/data/ServerSettings:/home/steam/exfil-dedicated/Exfil/ServerSettings/ \
@@ -64,7 +67,7 @@ Minimum system requirements are:
 
 * 2 CPUs
 * 4GiB RAM
-* 4GB of disk space for the container or mounted as a persistent volume on `/home/steam/exfil-dedicated/`
+* 5GB of disk space (approx. 1 GB for the container with steam and approx. 4 GB for the downloaded exfile server in `/home/steam/exfil-dedicated/`)
 
 ### Environment Variables
 
@@ -73,9 +76,9 @@ Feel free to overwrite these environment variables, using -e (--env):
 #### Server Configuration
 
 ```dockerfile
-# This variables are currently only a documentation placeholder and do nothing.
-EXFIL_SERVER_NAME="My server name"              (The server name)
-EXFIL_MAX_PLAYERS=32                            (The max. amount of players)
+EXFIL_SERVER_NAME="Scordo's dedicated"                                      (The server name)
+EXFIL_MAX_PLAYERS=32                                                        (The max. amount of players)
+EXFIL_SERVER_ADMINS="Admin1SteamID=Admin1Name;Admin2SteamID=Admin2Name;"    (Server admins separated by ; and each entry with steamid=playername)
 ```
 
 ## Customizing this Container

@@ -9,6 +9,9 @@ services:
     environment:
       - STEAM_USER=YourSteamServerAccountName
       - STEAM_PASSWORD=YourSteamServerAccountPassword
+      - EXFIL_SERVER_NAME=Your cool Server Name
+      - EXFIL_MAX_PLAYERS=32
+      - EXFIL_SERVER_ADMINS=YourSteamID=YourSteamName
 
 volumes:
   data:
