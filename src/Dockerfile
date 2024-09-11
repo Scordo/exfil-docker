@@ -6,6 +6,7 @@ FROM cm2network/steamcmd:root
 
 
 LABEL maintainer="admin@dev-com.de"
+LABEL org.opencontainers.image.source=https://github.com/Scordo/exfil-docker
 
 ENV STEAMAPPID=3093190
 ENV STEAMAPP=exfil

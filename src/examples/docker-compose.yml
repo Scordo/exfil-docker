@@ -1,6 +1,6 @@
 services:
   exfil:
-    image: exfil-server
+    image: ghcr.io/scordo/exfil-docker/server:latest
     container_name: exfilserver
     restart: unless-stopped
     network_mode: host

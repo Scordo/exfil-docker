@@ -18,4 +18,4 @@ docker run \
     -v $(pwd)/data/Saved:/home/steam/exfil-dedicated/Exfil/Saved/ \
     -v $(pwd)/data/ServerSettings:/home/steam/exfil-dedicated/Exfil/ServerSettings/ \
     --name=exfilserver \
-    exfil-server
+    ghcr.io/scordo/exfil-docker/server:latest

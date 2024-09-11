@@ -8,12 +8,6 @@ EXFIL is a tactical first person shooter which aims to provide gamers with sandb
 
 ## How to use this image
 
-### Building the image locally (Required as long as the image is not published on docker-hub)
-
-```console
-$ src/build-docker-image.sh
-```
-
 ### Hosting a simple game server
 
 Running using Docker:
@@ -45,7 +39,7 @@ $ docker run \
     -v $(pwd)/data/Saved:/home/steam/exfil-dedicated/Exfil/Saved/ \
     -v $(pwd)/data/ServerSettings:/home/steam/exfil-dedicated/Exfil/ServerSettings/ \
     --name=exfilserver \
-    exfil-server
+    ghcr.io/scordo/exfil-docker/server:latest
 ```
 
 or using docker-compose, see [examples](src/examples/docker-compose.yml):
