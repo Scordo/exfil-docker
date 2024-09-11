@@ -13,7 +13,7 @@ EXFIL is a tactical first person shooter which aims to provide gamers with sandb
 Running using Docker:
 
 ```console
-$ docker run -d --name=exfilserver -e STEAM_USER=YourSteamAccountName -e STEAM_PASSWORD=YourSteamAccountPassword exfil-server
+$ docker run -d --name=exfilserver -e STEAM_USER=YourSteamAccountName -e STEAM_PASSWORD=YourSteamAccountPassword --pull always ghcr.io/scordo/exfil-docker/server:latest
 ```
 
 Running using a bind mount for data persistence on container recreation:
@@ -38,6 +38,7 @@ $ docker run \
     -v $(pwd)/data/MatchSettings:/home/steam/exfil-dedicated/Exfil/MatchSettings/ \
     -v $(pwd)/data/Saved:/home/steam/exfil-dedicated/Exfil/Saved/ \
     -v $(pwd)/data/ServerSettings:/home/steam/exfil-dedicated/Exfil/ServerSettings/ \
+    --pull always \
     --name=exfilserver \
     ghcr.io/scordo/exfil-docker/server:latest
 ```

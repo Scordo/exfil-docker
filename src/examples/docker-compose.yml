@@ -2,6 +2,7 @@ services:
   exfil:
     image: ghcr.io/scordo/exfil-docker/server:latest
     container_name: exfilserver
+    pull_policy: always
     restart: unless-stopped
     network_mode: host
     volumes:
