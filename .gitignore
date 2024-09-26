@@ -1,4 +1,6 @@
 /src/run-exfil.sh
 /src/docker-compose.yml
 /src/build-docker-image-for-registry.sh
+/src/build-docker-image-for-registry.bat
 /src/push-docker-image.sh
+/src/push-docker-image.bat
