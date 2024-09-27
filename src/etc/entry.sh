@@ -60,7 +60,7 @@ function configure_server_settings {
   local SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
   local SERVER_SETTINGS_DIR="${STEAMAPPDIR}/Exfil/Saved/ServerSettings"
   local SERVER_SETTINGS_FILE="${SERVER_SETTINGS_DIR}/ServerSettings.JSON"
-  local DEDICATED_SETTINGS_FILE="${SERVER_SETTINGS_DIR}/DedicatedSettings.JSON"
+  DEDICATED_SETTINGS_FILE="${SERVER_SETTINGS_DIR}/DedicatedSettings.JSON"
   local server_settings_content="$(get_file_content "${SERVER_SETTINGS_FILE}")"
   local dedicated_settings_content="$(get_file_content "${DEDICATED_SETTINGS_FILE}")"
 
