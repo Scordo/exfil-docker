@@ -101,6 +101,8 @@ Feel free to overwrite these environment variables, using -e (--env):
 EXFIL_SERVER_NAME="Scordo's dedicated"                                      (The server name)
 EXFIL_MAX_PLAYERS=32                                                        (The max. amount of players)
 EXFIL_SERVER_ADMINS="Admin1SteamID=Admin1Name;Admin2SteamID=Admin2Name;"    (Server admins separated by ; and each entry with steamid=playername)
+EXFIL_SERVER_PORT=7777                                                      (The port the server is running on)
+EXFIL_SERVER_QUERY_PORT=27015                                               (The query port used by the server)
 ```
 
 ## Customizing this Container

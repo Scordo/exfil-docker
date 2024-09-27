@@ -11,6 +11,8 @@ LABEL org.opencontainers.image.source=https://github.com/Scordo/exfil-docker
 ENV STEAMAPPID=3093190
 ENV STEAMAPP=exfil
 ENV STEAMAPPDIR="${HOMEDIR}/${STEAMAPP}-dedicated"
+ENV EXFIL_SERVER_PORT=7777
+ENV EXFIL_SERVER_QUERY_PORT=27015
 
 COPY etc/entry.sh ${HOMEDIR}
 COPY etc/pre-serverstart.sh "/etc/pre-serverstart.sh"
@@ -21,9 +23,11 @@ RUN set -x \
 	&& apt-get update -qq > /dev/null \
 	&& apt-get install -qq jq > /dev/null  \
 	&& mkdir -p "${STEAMAPPDIR}" \
-    && mkdir -p "${STEAMAPPDIR}/Exfil/MatchSettings" \
-    && mkdir -p "${STEAMAPPDIR}/Exfil/Saved" \
-    && mkdir -p "${STEAMAPPDIR}/Exfil/ServerSettings" \
+    && mkdir -p "${STEAMAPPDIR}/Exfil/Saved/Logs" \
+	&& mkdir -p "${STEAMAPPDIR}/Exfil/Saved/Config" \
+	&& mkdir -p "${STEAMAPPDIR}/Exfil/Saved/MatchData" \
+	&& mkdir -p "${STEAMAPPDIR}/Exfil/Saved/MatchSettings" \
+    && mkdir -p "${STEAMAPPDIR}/Exfil/Saved/ServerSettings" \
 	&& chmod -R 755 "${HOMEDIR}/entry.sh" "${STEAMAPPDIR}" \
 	&& chown -R "${USER}:${USER}" "${HOMEDIR}/entry.sh" "${STEAMAPPDIR}"
 
