@@ -88,6 +88,11 @@ function configure_server_settings {
     set_json_config_value '.MaxPlayerCount' "${EXFIL_MAX_PLAYERS}" "${DEDICATED_SETTINGS_FILE}"
   fi
 
+  if [ -n "${EXFIL_SERVER_PASSWORD}" ]; then
+    echo "Server password will be set to: ${EXFIL_SERVER_PASSWORD}"
+    set_json_config_value '.ServerPassword' "${EXFIL_SERVER_PASSWORD}" "${DEDICATED_SETTINGS_FILE}"
+  fi
+
   if [ -n "${EXFIL_SERVER_ADMINS}" ]; then
     echo "Found server admins: ${EXFIL_SERVER_ADMINS}"
       IFS=';' read -ra server_admins <<< "${EXFIL_SERVER_ADMINS}"

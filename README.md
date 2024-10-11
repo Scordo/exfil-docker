@@ -88,7 +88,7 @@ You must have at least **4GB** of free disk space! See [System Requirements](./#
 Minimum system requirements are:
 
 * 2 CPUs
-* 4GiB RAM
+* 8GiB RAM
 * 5GB of disk space (approx. 1 GB for the container with steam and approx. 4 GB for the downloaded exfile server in `/home/steam/exfil-dedicated/`)
 
 ### Environment Variables
@@ -103,6 +103,7 @@ EXFIL_MAX_PLAYERS=32                                                        (The
 EXFIL_SERVER_ADMINS="Admin1SteamID=Admin1Name;Admin2SteamID=Admin2Name;"    (Server admins separated by ; and each entry with steamid=playername)
 EXFIL_SERVER_PORT=7777                                                      (The port the server is running on)
 EXFIL_SERVER_QUERY_PORT=27015                                               (The query port used by the server)
+EXFIL_SERVER_PASSWORD=xyz                                                   (The optional server password)
 ```
 
 ## Customizing this Container
