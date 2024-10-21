@@ -47,11 +47,24 @@ function install_or_update_exfil {
   # Pre Server Update Hook
   source "${STEAMAPPDIR}/pre-serverupdate.sh"
 
-  echo "Loading Exfil Server from Steam"
-  bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
-                  +login ${STEAM_USER} ${STEAM_PASSWORD} ${STEAM_TOKEN} \
-                  +app_update "${STEAMAPPID}" \
-                  +quit
+  if [ -n "${STEAM_BETA_BRANCH}" ]
+  then
+    echo "Loading Exfil Server from Steam (branch: ${STEAM_BETA_BRANCH})"
+    
+    bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
+                    +login ${STEAM_USER} ${STEAM_PASSWORD} ${STEAM_TOKEN} \
+                    +app_update "${STEAMAPPID}" \
+                    -beta "${STEAM_BETA_BRANCH}" \
+                    -betapassword "${STEAM_BETA_PASSWORD}" \
+                    +quit
+  else
+    echo "Loading Exfil Server from Steam"
+        
+    bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
+                    +login ${STEAM_USER} ${STEAM_PASSWORD} ${STEAM_TOKEN} \
+                    +app_update "${STEAMAPPID}" \
+                    +quit
+  fi
 }
 
 function configure_server_settings {
