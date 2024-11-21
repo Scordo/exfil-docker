@@ -50,7 +50,7 @@ function install_or_update_exfil {
   if [ -n "${STEAM_BETA_BRANCH}" ]
   then
     echo "Loading Exfil Server from Steam (branch: ${STEAM_BETA_BRANCH})"
-    
+
     bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
                     +login ${STEAM_USER} ${STEAM_PASSWORD} ${STEAM_TOKEN} \
                     +app_update "${STEAMAPPID}" \
@@ -59,7 +59,7 @@ function install_or_update_exfil {
                     +quit
   else
     echo "Loading Exfil Server from Steam"
-        
+
     bash "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
                     +login ${STEAM_USER} ${STEAM_PASSWORD} ${STEAM_TOKEN} \
                     +app_update "${STEAMAPPID}" \
@@ -73,14 +73,16 @@ function configure_server_settings {
   local SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
   local SERVER_SETTINGS_DIR="${STEAMAPPDIR}/Exfil/Saved/ServerSettings"
   local SERVER_SETTINGS_FILE="${SERVER_SETTINGS_DIR}/ServerSettings.JSON"
+  local ADMIN_SETTINGS_FILE="${SERVER_SETTINGS_DIR}/AdminSettings.JSON"
   DEDICATED_SETTINGS_FILE="${SERVER_SETTINGS_DIR}/DedicatedSettings.JSON"
   local server_settings_content="$(get_file_content "${SERVER_SETTINGS_FILE}")"
   local dedicated_settings_content="$(get_file_content "${DEDICATED_SETTINGS_FILE}")"
+  local admin_settings_content="$(get_file_content "${ADMIN_SETTINGS_FILE}")"
 
   if [[ -z "${server_settings_content// }" ]]; then
     echo "Server settings are empty or do not exist. Creating default settings."
     mkdir -p "${SERVER_SETTINGS_DIR}"
-    echo "{}" > "${SERVER_SETTINGS_FILE}"
+    echo '{"AutoStartTimer":0,"MinAutoStartPlayers": "2","AddAutoStartTimeOnPlayerJoin":20}' > "${SERVER_SETTINGS_FILE}"
   fi
 
   if [[ -z "${dedicated_settings_content// }" ]]; then
@@ -107,6 +109,12 @@ function configure_server_settings {
   fi
 
   if [ -n "${EXFIL_SERVER_ADMINS}" ]; then
+    if [[ -z "${admin_settings_content// }" ]]; then
+      echo "Admin settings are empty or do not exist. Creating default settings."
+      mkdir -p "${SERVER_SETTINGS_DIR}"
+      echo '{"admin":{},"BanList":[]}' > "${ADMIN_SETTINGS_FILE}"
+    fi
+
     echo "Found server admins: ${EXFIL_SERVER_ADMINS}"
       IFS=';' read -ra server_admins <<< "${EXFIL_SERVER_ADMINS}"
 
@@ -115,7 +123,7 @@ function configure_server_settings {
           admin_steam_id="${server_admin%=*}"
           admin_name="${server_admin#*=}"
           printf "\t> Adding '${admin_name}' with steam id '${admin_steam_id}'\n"
-          set_json_config_value ".admin.\"${admin_steam_id}\"" "${admin_name}" "${SERVER_SETTINGS_FILE}"
+          set_json_config_value ".admin.\"${admin_steam_id}\"" "${admin_name}" "${ADMIN_SETTINGS_FILE}"
       done
   fi
 }
