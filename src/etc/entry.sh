@@ -9,6 +9,24 @@ function set_json_config_value {
   echo $(jq "${jq_args[@]}") > $config
 }
 
+function fn_add_role_to_json_config {
+  local steamid=$1
+  local name=$2
+  local role=$3
+  local config=$4
+
+  local jq_args=('--arg' 'steamid' "${steamid}" '--arg' 'name' "${name}" '--arg' 'role' "${role}" ".AdminList += [{ steamId: \$steamid, name: \$name, adminLevel: \$role }] " "${config}"  )
+  echo $(jq "${jq_args[@]}") > $config
+}
+
+function fn_remove_role_from_json_config {
+  local steamid=$1
+  local config=$2
+
+  local jq_args=('--arg' 'steamid' "${steamid}" "del(.AdminList[] | select(.steamId==\$steamid))" "${config}"  )
+  echo $(jq "${jq_args[@]}") > $config
+}
+
 function get_random_server_name {
   local array=()
   for i in {a..z} {A..Z} {0..9};
@@ -108,23 +126,34 @@ function configure_server_settings {
     set_json_config_value '.ServerPassword' "${EXFIL_SERVER_PASSWORD}" "${DEDICATED_SETTINGS_FILE}"
   fi
 
-  if [ -n "${EXFIL_SERVER_ADMINS}" ]; then
+  if [ -n "${EXFIL_SERVER_ROLES}" ]; then
     if [[ -z "${admin_settings_content// }" ]]; then
-      echo "Admin settings are empty or do not exist. Creating default settings."
-      mkdir -p "${SERVER_SETTINGS_DIR}"
-      echo '{"admin":{},"BanList":[]}' > "${ADMIN_SETTINGS_FILE}"
+        echo "Admin settings are empty or do not exist. Creating default settings."
+        mkdir -p "${SERVER_SETTINGS_DIR}"
+        echo '{"AdminList":[],"BanList":[]}' > "${ADMIN_SETTINGS_FILE}"
     fi
 
-    echo "Found server admins: ${EXFIL_SERVER_ADMINS}"
-      IFS=';' read -ra server_admins <<< "${EXFIL_SERVER_ADMINS}"
+    echo "Found server roles: ${EXFIL_SERVER_ROLES}"
+    IFS=';' read -ra server_roles <<< "${EXFIL_SERVER_ROLES}"
 
-      for server_admin in "${server_admins[@]}"
-      do
-          admin_steam_id="${server_admin%=*}"
-          admin_name="${server_admin#*=}"
-          printf "\t> Adding '${admin_name}' with steam id '${admin_steam_id}'\n"
-          set_json_config_value ".admin.\"${admin_steam_id}\"" "${admin_name}" "${ADMIN_SETTINGS_FILE}"
-      done
+    for server_role in "${server_roles[@]}"
+    do
+        IFS='|' read -ra role_parts <<< "${server_role}"
+
+        if [[ ${#role_parts[@]} -ne 3 ]]; then
+            echo "Invalid value for server roles. There have to be exactly 3 parts in '${server_role}' separated by '|'. SteamId|Name|Role"
+            exit 1
+        fi
+
+        entry_steam_id="${role_parts[0]}"
+        entry_name="${role_parts[1]}"
+        entry_role="${role_parts[2]}"
+
+        printf "\t> Adding '${entry_name}' with steam id '${entry_steam_id}' as '${entry_role}'\n"
+
+        fn_remove_role_from_json_config "$entry_steam_id" $ADMIN_SETTINGS_FILE
+        fn_add_role_to_json_config "$entry_steam_id" "${entry_name}" "${entry_role}" $ADMIN_SETTINGS_FILE
+    done
   fi
 }
 

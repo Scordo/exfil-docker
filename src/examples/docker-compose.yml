@@ -12,7 +12,7 @@ services:
       - STEAM_PASSWORD=YourSteamServerAccountPassword
       - EXFIL_SERVER_NAME=Your cool Server Name
       - EXFIL_MAX_PLAYERS=32
-      - EXFIL_SERVER_ADMINS=YourSteamID=YourSteamName
+      - EXFIL_SERVER_ROLES=YourSteamID|YourSteamName|Admin
 
 volumes:
   data:
