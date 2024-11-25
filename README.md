@@ -88,8 +88,8 @@ You must have at least **4GB** of free disk space! See [System Requirements](./#
 Minimum system requirements are:
 
 * 2 CPUs
-* 8GiB RAM
-* 5GB of disk space (approx. 1 GB for the container with steam and approx. 4 GB for the downloaded exfile server in `/home/steam/exfil-dedicated/`)
+* 4GiB RAM
+* 5GB of free disk space (approx.  400 MB for the docker image, 200 MiB for the docker container and 4300 MiB for the volume - the downloaded exfil server in `/home/steam/exfil-dedicated/`)
 
 ### Environment Variables
 
@@ -98,7 +98,7 @@ Feel free to overwrite these environment variables, using -e (--env):
 #### Server Configuration
 
 ```dockerfile
-EXFIL_SERVER_NAME=Scordo's dedicated                                            (The server name)
+EXFIL_SERVER_NAME=Scordos dedicated                                             (The server name)
 EXFIL_MAX_PLAYERS=32                                                            (The max. amount of players)
 EXFIL_SERVER_ROLES=AdminSteamID|AdminName|Admin;ModSteamID|ModName|Moderator    (Server roles separated by ; and each entry with steamid|playername|role, where role can be Admin or Moderator)
 EXFIL_SERVER_PORT=7777                                                          (The port the server is running on)
