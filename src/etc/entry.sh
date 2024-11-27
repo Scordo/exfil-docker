@@ -175,7 +175,10 @@ function start_server {
     server_query_port="${EXFIL_SERVER_QUERY_PORT}"
   fi
 
-  bash "${STEAMAPPDIR}/ExfilServer.sh" "-port=${EXFIL_SERVER_PORT}" "-QueryPort=${EXFIL_SERVER_QUERY_PORT}"
+  local EXECUTABLE_PATH="${STEAMAPPDIR}/Exfil/Binaries/Linux/ExfilServer"
+  chmod +x "${EXECUTABLE_PATH}"
+
+  "${EXECUTABLE_PATH}" "-port=${EXFIL_SERVER_PORT}" "-QueryPort=${EXFIL_SERVER_QUERY_PORT}"
 }
 
 #endregion
