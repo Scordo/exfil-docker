@@ -64,7 +64,7 @@ or using docker-compose, see [examples](src/examples/docker-compose.yml):
 $ docker compose --file src/examples/docker-compose.yml up -d
 ```
 
-You must have at least **4GB** of free disk space! See [System Requirements](./#system-requirements).
+You must have at least **5GB** of free disk space! See [System Requirements](./#system-requirements).
 
 **The container will automatically update the game on startup, so if there is a game update just restart the container.**
 
