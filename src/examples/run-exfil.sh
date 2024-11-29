@@ -8,9 +8,6 @@ sudo chmod -R 777 "$(pwd)/data"
 
 docker run \
     -d \
-    -e STEAM_USER=YourSteamServerAccountName \
-    -e STEAM_PASSWORD=YourSteamServerAccountPassword \
-    -e STEAM_TOKEN= \
     -e EXFIL_SERVER_NAME="Your Server Name" \
     -e EXFIL_MAX_PLAYERS=16 \
     -e EXFIL_SERVER_ROLES="YourSteamID|YourSteamName|Admin" \
